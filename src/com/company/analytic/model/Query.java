@@ -1,7 +1,6 @@
 package com.company.analytic.model;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Query {
     private String serviceId;
@@ -9,17 +8,17 @@ public class Query {
     private String responseType;
     private LocalDate startLocalDate;
     private LocalDate endLocalDate;
+    private int lineNumber;
 
     public Query() {
     }
 
-
-    public Query(String serviceId, String questionTypeId, String responseType) {
+    public Query(String serviceId, String questionTypeId, String responseType, int lineNumber) {
         this.serviceId = serviceId;
         this.questionTypeId = questionTypeId;
         this.responseType = responseType;
+        this.lineNumber = lineNumber;
     }
-
 
     public String getServiceId() {
         return serviceId;
@@ -61,6 +60,14 @@ public class Query {
         this.endLocalDate = endLocalDate;
     }
 
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
     @Override
     public String toString() {
         return "Query{" +
@@ -69,23 +76,35 @@ public class Query {
                 ", responseType='" + responseType + '\'' +
                 ", startLocalDate=" + startLocalDate +
                 ", endLocalDate=" + endLocalDate +
+                ", lineNumber=" + lineNumber +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Query)) return false;
+
         Query query = (Query) o;
-        return Objects.equals(serviceId, query.serviceId) &&
-                Objects.equals(questionTypeId, query.questionTypeId) &&
-                Objects.equals(responseType, query.responseType) &&
-                Objects.equals(startLocalDate, query.startLocalDate) &&
-                Objects.equals(endLocalDate, query.endLocalDate);
+
+        if (lineNumber != query.lineNumber) return false;
+        if (serviceId != null ? !serviceId.equals(query.serviceId) : query.serviceId != null) return false;
+        if (questionTypeId != null ? !questionTypeId.equals(query.questionTypeId) : query.questionTypeId != null)
+            return false;
+        if (responseType != null ? !responseType.equals(query.responseType) : query.responseType != null) return false;
+        if (startLocalDate != null ? !startLocalDate.equals(query.startLocalDate) : query.startLocalDate != null)
+            return false;
+        return endLocalDate != null ? endLocalDate.equals(query.endLocalDate) : query.endLocalDate == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(serviceId, questionTypeId, responseType, startLocalDate, endLocalDate);
+        int result = serviceId != null ? serviceId.hashCode() : 0;
+        result = 31 * result + (questionTypeId != null ? questionTypeId.hashCode() : 0);
+        result = 31 * result + (responseType != null ? responseType.hashCode() : 0);
+        result = 31 * result + (startLocalDate != null ? startLocalDate.hashCode() : 0);
+        result = 31 * result + (endLocalDate != null ? endLocalDate.hashCode() : 0);
+        result = 31 * result + lineNumber;
+        return result;
     }
 }
