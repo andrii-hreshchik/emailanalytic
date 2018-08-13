@@ -8,15 +8,10 @@ import java.util.List;
 
 public class FileUtils {
 
-    public static List<String> readFile(String fileName) {
+    public static List<String> readFile(String fileName) throws IOException {
         if (checkExists(fileName)) {
-            try {
-                return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                System.out.println("Reading file error occurred" + e.getMessage());
-            }
+            return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
         }
-        //TODO file not exist
         return null;
     }
 
