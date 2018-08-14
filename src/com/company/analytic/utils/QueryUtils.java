@@ -25,6 +25,7 @@ public class QueryUtils {
 
                     .mapToDouble(Data::getWaitingTime)
                     .average().orElse(0.0);
+            //if query has no result - print "-"
             System.out.println(Math.round(result) == 0 ? "-" : Math.round(result));
         }
     }
